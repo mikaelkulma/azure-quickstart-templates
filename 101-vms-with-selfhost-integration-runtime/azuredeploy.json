@@ -95,8 +95,8 @@
       "_"
     ],
     "prefix": "[split(parameters('IntegrationRuntimeName'), variables('delimiters'))[0]]",
-    "storageAccountName": "[concat('edp', resourceGroup().id)]",
-    "networkSecurityGroupName": "['nsg-edp-dv-ir']",
+    "storageAccountName": "[take(concat('edp', uniquestring(resourceGroup().id, parameters('IntegrationRuntimeName'))), 24)]",
+    "networkSecurityGroupName": "nsg-edp-dv-ir",
     "vmTemplateLink": "[concat(parameters('_artifactsLocation'), 'nested/VMtemplate.json',parameters('_artifactsLocationSasToken'))]",
     "irInstallTemplateLink": "[concat(parameters('_artifactsLocation'), 'nested/IRInstall.json',parameters('_artifactsLocationSasToken'))]",
     "IRtemplateLink": "[concat(parameters('_artifactsLocation'), 'nested/', parameters('existingDataFactoryVersion'), 'IRtemplate.json',parameters('_artifactsLocationSasToken'))]",
