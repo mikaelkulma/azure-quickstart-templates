@@ -95,8 +95,8 @@
       "_"
     ],
     "prefix": "[split(parameters('IntegrationRuntimeName'), variables('delimiters'))[0]]",
-    "storageAccountName": "[take(concat(toLower(variables('prefix')), uniquestring(resourceGroup().id, parameters('IntegrationRuntimeName'))), 24)]",
-    "networkSecurityGroupName": "[concat(parameters('IntegrationRuntimeName'), 'nsg')]",
+    "storageAccountName": "[concat('edp', resourceGroup().id)]",
+    "networkSecurityGroupName": "['nsg-edp-dv-ir']",
     "vmTemplateLink": "[concat(parameters('_artifactsLocation'), 'nested/VMtemplate.json',parameters('_artifactsLocationSasToken'))]",
     "irInstallTemplateLink": "[concat(parameters('_artifactsLocation'), 'nested/IRInstall.json',parameters('_artifactsLocationSasToken'))]",
     "IRtemplateLink": "[concat(parameters('_artifactsLocation'), 'nested/', parameters('existingDataFactoryVersion'), 'IRtemplate.json',parameters('_artifactsLocationSasToken'))]",
@@ -133,7 +133,7 @@
       "properties": {
         "securityRules": [
           {
-            "name": "default-allow-rdp",
+            "name": "Allow-InBound-RDP",
             "properties": {
               "priority": 1000,
               "sourceAddressPrefix": "*",
@@ -183,7 +183,7 @@
         },
         "parameters": {
           "virtualMachineName": {
-            "value": "[take(concat('vm',copyIndex(),'-', variables('prefix')), 15)]"
+            "value": "[concat('ivm-edp-ir-00',copyIndex(1))]"
           },
           "adminUserName": {
             "value": "[parameters('adminUserName')]"
@@ -229,7 +229,7 @@
             "value": "[reference(resourceId(parameters('existingDataFactoryResourceGroup'), 'Microsoft.Resources/deployments', 'nestedTemplate')).outputs.IRkey.value]"
           },
           "virtualMachineName": {
-            "value": "[take(concat('vm',copyIndex(),'-', variables('prefix')), 15)]"
+            "value": "[concat('ivm-edp-ir-00',copyIndex(1))]"
           },
           "existingVnetLocation": {
             "value": "[parameters('existingVnetLocation')]"

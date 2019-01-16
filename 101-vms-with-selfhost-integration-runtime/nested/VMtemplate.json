@@ -25,8 +25,8 @@
     }
   },
   "variables": {
-    "nicName": "[concat(parameters('virtualMachineName'), 'Nic')]",
-    "publicIPAddressName": "[concat(parameters('virtualMachineName'), '-ip')]"
+    "nicName": "[concat(parameters('virtualMachineName'), '-nic')]",
+    "publicIPAddressName": "[concat('pip-', parameters('virtualMachineName'))]"
   },
   "resources": [
     {
@@ -67,7 +67,7 @@
       }
     },
     {
-      "apiVersion": "2017-03-30", 
+      "apiVersion": "2017-03-30",
       "type": "Microsoft.Compute/virtualMachines",
       "name": "[parameters('virtualMachineName')]",
       "location": "[parameters('existingVnetLocation')]",
@@ -91,8 +91,8 @@
             "version": "latest"
           },
           "osDisk": {
-           
-           "name": "[concat(parameters('virtualMachineName'),'_OSDisk')]", 
+
+           "name": "[concat(parameters('virtualMachineName'),'-dc001')]",
             "caching": "ReadWrite",
             "createOption": "FromImage"
           }
